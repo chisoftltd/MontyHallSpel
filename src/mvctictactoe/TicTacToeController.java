@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.util.Observable;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -83,18 +84,18 @@ public class TicTacToeController extends Observable {
                         if ((JButton) evt.getSource() == gameButton[i][j]) {
                             theView.setPlayerSeed(theModel.getPlayerSeed());
                             if (theView.getPlayerSeed().equals("X")) {
-                                Icon img = new ImageIcon("C:\\Users\\Chisoft"
-                                        + "\\Documents\\NetBeansProjects\\"
-                                        + "TicTacToeGraphics\\image\\cross.jpg");
+                                Icon img = new ImageIcon(ImageIO.read(
+                                        GameButtonListener.class.
+                                                getResourceAsStream("image/zero.jpg")));
                                 ((JButton) evt.getSource()).setIcon(img);
 
                                 // Set enum value
                                 theModel.setCurrentSeed(theModel.currentSeed.CROSS, i, j);
                                 theModel.setPlayerSeed(theView.getPlayerSeed());
                             } else {
-                                Icon img = new ImageIcon("C:\\Users\\Chisoft"
-                                        + "\\Documents\\NetBeansProjects"
-                                        + "\\TicTacToeGraphics\\image\\zero.jpg");
+                                Icon img = new ImageIcon(ImageIO.read(
+                                        GameButtonListener.class.
+                                                getResourceAsStream("image/zero.jpg")));
                                 ((JButton) evt.getSource()).setIcon((img));
 
                                 // Set enum value NOUGHT
