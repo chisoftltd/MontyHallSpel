@@ -10,7 +10,7 @@ import java.awt.Toolkit;
 
 /**
  *
- * @author Chisoft
+ * @author Benjamin Chinwe 2016
  */
 public class MVCTicTacToe {
 
@@ -21,7 +21,10 @@ public class MVCTicTacToe {
         // Instantiate the View and Controller classes
         TicTacToeView theView = new TicTacToeView();
         TicTacToeController ticTacToeController = new TicTacToeController(theView);
-        ticTacToeController.addObserver(theView);
+        ticTacToeController.addObserver(theView); // Adding the Observer 
+        // to the Observable
+
+        // Setting up location of UI relative to the screen size
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - theView.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - theView.getHeight()) / 2);

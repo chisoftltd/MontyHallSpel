@@ -5,7 +5,6 @@
  */
 package mvctictactoe;
 
-import com.sun.glass.events.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,14 +16,15 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Chisoft
+ * @author Benjamin Chinwe 2016
  */
 public class TicTacToeController extends Observable {
 
     private final TicTacToeView theView;
     private final TicTacToeModel theModel;
 
-    public TicTacToeController(TicTacToeView ticTacToeView) { // TicTacToeController class constructor
+    // TicTacToeController class constructor
+    public TicTacToeController(TicTacToeView ticTacToeView) {
         theView = ticTacToeView;
 
         theView.setPlayersName(); // Call setPlayersName method of TicTacToeView class
@@ -32,15 +32,18 @@ public class TicTacToeController extends Observable {
 
         //Instantiate the TicTacToeModel class 
         theModel = new TicTacToeModel(theView.getGameButton(),
-                theView.getPlayerOneName(), theView.getPlayerTwoName(), theView.getPlayerSeed());
+                theView.getPlayerOneName(), theView.getPlayerTwoName(),
+                theView.getPlayerSeed());
 
-        //Call the addGameButtonListener method of TicTacToeView class and class a new class GameButtonListener()
+        //Call the addGameButtonListener method of TicTacToeView class and 
+        //class a new class GameButtonListener()
         theView.addGameButtonListener(new GameButtonListener());
 
     }
 
     // Inner class GameButtonListener with ActionListener implimentation
-    public class GameButtonListener extends MouseAdapter implements ActionListener, MouseListener {
+    public class GameButtonListener extends MouseAdapter implements
+            ActionListener, MouseListener {
 
         public GameButtonListener() { //Constructor
         }
@@ -50,38 +53,52 @@ public class TicTacToeController extends Observable {
         public void actionPerformed(ActionEvent evt) {
             if (theModel.isGo()) {
                 theModel.reset(); // Reset the game after a win or a draw 
-                theView.setPlayerSeed(theModel.getPlayerSeed()); //ReSet Player's ID_Seed after a Win or a Draw
-                theView.setGameButton(theModel.getGameButton()); //Get Resetted Game Button array after a Win or a Draw
+
+                //ReSet Player's ID_Seed after a Win or a Draw
+                theView.setPlayerSeed(theModel.getPlayerSeed());
+                //Get Resetted Game Button array after a Win or a Draw
+                theView.setGameButton(theModel.getGameButton());
             } //game over, reset all flags
 
             if (theView.getPlayerSeed().equals("X")) {
-                theView.getOutPutText().setText(theView.getPlayerTwoName() + " 'Turn to play - TicTacToe");
+                theView.getOutPutText().setText(theView.getPlayerTwoName()
+                        + " 'Turn to play - TicTacToe");
             } else {
-                theView.getOutPutText().setText(theView.getPlayerOneName() + " 'Turn to play - TicTacToe");
+                theView.getOutPutText().setText(theView.getPlayerOneName()
+                        + " 'Turn to play - TicTacToe");
             }
 
-            //Call jButtonActionPerformed() to pass event and button array to other function       
+            //Call jButtonActionPerformed() to pass event and button array 
+            //to other function       
             jButtonActionPerformed(evt, theView.getGameButton());
         }
 
-        private void jButtonActionPerformed(ActionEvent evt, JButton[][] gameButton) {
+        private void jButtonActionPerformed(ActionEvent evt,
+                JButton[][] gameButton) {
             try {
                 //if (evt.getActionCommand().equals(TicTacToeModel.Seed.EMPTY)) {
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
-                        if ((JButton) evt.getSource() == gameButton[i][j]) { // Determine event source
+                        // Determine event source
+                        if ((JButton) evt.getSource() == gameButton[i][j]) {
                             theView.setPlayerSeed(theModel.getPlayerSeed());
                             if (theView.getPlayerSeed().equals("X")) {
-                                Icon img = new ImageIcon("C:\\Users\\Chisoft\\Documents\\"
-                                        + "NetBeansProjects\\TicTacToeGraphics\\image\\cross.jpg");
+                                Icon img = new ImageIcon("C:\\Users\\Chisoft"
+                                        + "\\Documents\\NetBeansProjects\\"
+                                        + "TicTacToeGraphics\\image\\cross.jpg");
                                 ((JButton) evt.getSource()).setIcon(img);
-                                theModel.setCurrentSeed(theModel.currentSeed.CROSS, i, j); // Set enum value
+
+                                // Set enum value
+                                theModel.setCurrentSeed(theModel.currentSeed.CROSS, i, j);
                                 theModel.setPlayerSeed(theView.getPlayerSeed());
                             } else {
-                                Icon img = new ImageIcon("C:\\Users\\Chisoft\\Documents\\"
-                                        + "NetBeansProjects\\TicTacToeGraphics\\image\\zero.jpg");
+                                Icon img = new ImageIcon("C:\\Users\\Chisoft"
+                                        + "\\Documents\\NetBeansProjects"
+                                        + "\\TicTacToeGraphics\\image\\zero.jpg");
                                 ((JButton) evt.getSource()).setIcon((img));
-                                theModel.setCurrentSeed(theModel.currentSeed.NOUGHT, i, j); // Set enum value NOUGHT
+
+                                // Set enum value NOUGHT
+                                theModel.setCurrentSeed(theModel.currentSeed.NOUGHT, i, j);
                                 theModel.setPlayerSeed(theView.getPlayerSeed());
                             }
                             gameButton[i][j].setEnabled(false);
@@ -90,7 +107,6 @@ public class TicTacToeController extends Observable {
 
                     }
                 }
-                //System.out.println("theModel.boardFull() = " + theModel.boardFull());
 
                 if (theModel.boardFull()) { // Determine if is a draw
                     draw();
@@ -100,17 +116,17 @@ public class TicTacToeController extends Observable {
                 theView.getGameStatusLabel();
                 theModel.whoWins(); // Determine if there is winnner
 
-                if (theView.getPlayerSeed().equals("X")) { // Swap the ID-letters 'X* for 'O'
+                // Swap the ID-letters 'X* for 'O'
+                if (theView.getPlayerSeed().equals("X")) {
                     theView.setPlayerSeed("O");
                     theModel.setPlayerSeed(theView.getPlayerSeed());
 
-                } else if (theView.getPlayerSeed().equals("O")) { // Swap the ID-letters 'O' for 'X'
+                    // Swap the ID-letters 'O' for 'X'
+                } else if (theView.getPlayerSeed().equals("O")) {
                     theView.setPlayerSeed("X");
                     theModel.setPlayerSeed(theView.getPlayerSeed());
                 }
-                /* } else {
-                    theView.displayErrorMessage("Taken, click elsewhere"); // Capture player' error move
-                }*/
+
             } catch (Exception e) {
                 theView.displayErrorMessage(e.getMessage()); // Handle error
             }
@@ -118,7 +134,8 @@ public class TicTacToeController extends Observable {
 
         private void draw() { // Method to notify players of a draw game
             theModel.setGo(true);
-            theView.displayErrorMessage("Draw Score X: " + theModel.getXTotal() + "  O: " + theModel.getOTotal());
+            theView.displayErrorMessage("Draw Score X: " + theModel.getXTotal()
+                    + "  O: " + theModel.getOTotal());
             theModel.reset();
         }
 
@@ -142,25 +159,24 @@ public class TicTacToeController extends Observable {
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent e) {
-           
+
         }
 
-        private void addButtonMouseListener(java.awt.event.MouseEvent e, JButton[][] gameButton) {
+        private void addButtonMouseListener(java.awt.event.MouseEvent e,
+                JButton[][] gameButton) {
 
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if ((JButton) e.getSource() == gameButton[i][j]) {
                         if (!(gameButton[i][j].isEnabled())) {
-                            //theView.displayErrorMessage("Taken, click elsewhere");
+                            //setChange and Notify the update method of TicTacToeView
                             setChanged();
                             notifyObservers("Taken, click elsewhere");
                         }
-                    }                    
+                    }
                 }
                 theView.getGameStatusLabel();
             }
-            
-            
         }
     }
 }

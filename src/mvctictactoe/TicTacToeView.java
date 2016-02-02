@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Chisoft
+ * @author Benjamin Chinwe 2016
  */
 public class TicTacToeView extends JFrame implements Observer {
 
@@ -44,7 +44,6 @@ public class TicTacToeView extends JFrame implements Observer {
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public TicTacToeView() { // TicTacToeView class constructor
         // Set up UI 
-
         addWindowListener(new WindowDestroyer());
         setTitle("TicTacToe");
         setSize(700, 700);
@@ -57,7 +56,8 @@ public class TicTacToeView extends JFrame implements Observer {
         buttonPanel.setBackground(Color.gray);
         buttonPanel.setLayout(new GridLayout(3, 3));
 
-        // font = new Font("Courier", Font.BOLD, 18); // Setting Textfield font propeties 
+        // font = new Font("Courier", Font.BOLD, 18); // Setting Textfield 
+        //font propeties 
         outputField = new JTextField(" Welcome to TreIRad i Grafik ");
         font = outputField.getFont().deriveFont(Font.BOLD, 30f);
         outputField.setFont(font);
@@ -68,7 +68,7 @@ public class TicTacToeView extends JFrame implements Observer {
 
         layerGameBoard(gameButton); // Method to initialize game board
         contentPane.add(buttonPanel, BorderLayout.CENTER);
-        
+
         gameStatusLabel = new JLabel();
         gameStatusLabel.setFont(font);
         gameStatusPanel = new JPanel();
@@ -83,13 +83,14 @@ public class TicTacToeView extends JFrame implements Observer {
             for (int j = 0; j < 3; j++) {
                 tempGameButton = new JButton();
                 gameButton[i][j] = tempGameButton;
-                gameButton[i][j].setBackground(new Color(TicTacToeSingleton.getInstance(),
-                        TicTacToeSingleton.getInstance(), TicTacToeSingleton.getInstance()));
+                gameButton[i][j].setBackground(new Color(
+                        TicTacToeSingleton.getInstance(),
+                        TicTacToeSingleton.getInstance(),
+                        TicTacToeSingleton.getInstance()));
                 buttonPanel.add(gameButton[i][j]);
             }
         }
     }
-
 
     // Method to reset the gameboard after a win or draw
     public void setGameButton(JButton[][] gameButtonView) {
@@ -104,20 +105,25 @@ public class TicTacToeView extends JFrame implements Observer {
 
     // Method to accept players names
     void setPlayersName() {
-        playerOneName = JOptionPane.showInputDialog(null, "Enter Player One Name").toUpperCase();
-        playerTwoName = JOptionPane.showInputDialog(null, "Enter Player Two Name").toUpperCase();
+        playerOneName = JOptionPane.showInputDialog(null,
+                "Enter Player One Name").toUpperCase();
+        playerTwoName = JOptionPane.showInputDialog(null,
+                "Enter Player Two Name").toUpperCase();
     }
 
     //Methos to accept player's ID - letter
     void setPlayerSeed() {
-        player = JOptionPane.showInputDialog(null, "Enter ID letter - X or O : ").toUpperCase();
+        player = JOptionPane.showInputDialog(null,
+                "Enter ID letter - X or O : ").toUpperCase();
 
         while (((!(player.equals("X")) && (!(player.equals("O")))))) {
-            player = JOptionPane.showInputDialog(null, "Try Again! Enter letter - X or O : ").toUpperCase();
+            player = JOptionPane.showInputDialog(null,
+                    "Try Again! Enter letter - X or O : ").toUpperCase();
         }
         //outputField.setText(playerOneName + "!  Please start the game! ");
     }
- // Method to add ActionListener to the game buttons
+    // Method to add ActionListener to the game buttons
+
     void addGameButtonListener(ActionListener listenForButtonClick) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -127,6 +133,7 @@ public class TicTacToeView extends JFrame implements Observer {
         }
 
     }
+
     public void setGameStatusLabel(String messageLabel) {
         gameStatusLabel.setText(messageLabel);
     }
@@ -134,6 +141,7 @@ public class TicTacToeView extends JFrame implements Observer {
     public JLabel getGameStatusLabel() {
         return gameStatusLabel;
     }
+
     // Method to get or return player ID - letter
     public String getPlayerSeed() {
         return player;
@@ -171,8 +179,7 @@ public class TicTacToeView extends JFrame implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable o, Object arg) { //Observer update method
         displayErrorMessage((String) arg);
     }
 

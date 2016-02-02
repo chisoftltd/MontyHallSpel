@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Chisoft
+ * @author Benjamin Chinwe 2016
  */
 public class TicTacToeModel {
 
@@ -35,7 +35,9 @@ public class TicTacToeModel {
     }
 
     // Argumented constructor method
-    public TicTacToeModel(JButton[][] gameButtonCont, String playerOneNameCont, String playerTwoNameCont, String playerSeedCont) {
+    public TicTacToeModel(JButton[][] gameButtonCont, 
+            String playerOneNameCont, String playerTwoNameCont, 
+            String playerSeedCont) {
         arr = new Seed[3][3]; // Creats enum Seed array 
         gameButton = gameButtonCont;
         //this.go = go;
@@ -46,7 +48,6 @@ public class TicTacToeModel {
         for (int i = 0; i < 3; i++) { // For- to initialise Seed array arr
             for (int j = 0; j < 3; j++) {
                 arr[i][j] = Seed.EMPTY;
-                //System.out.println("arr[i][j] - TicTacToeModel() " + arr[i][j]);
             }
         }
     }
@@ -57,8 +58,6 @@ public class TicTacToeModel {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                //System.out.println("arr[i][j] - boardfull " + arr[i][j]);
-                //System.out.println("boardFull( Seed.EMPTY =" + Seed.EMPTY + " arr[i][j] == Seed.EMPTY " + (arr[i][j] == Seed.EMPTY));
                 if (arr[i][j] == Seed.EMPTY) {
                     full = false;
                 }
@@ -83,12 +82,13 @@ public class TicTacToeModel {
                 gameButton[i][j].setIcon(null);
                 arr[i][j] = Seed.EMPTY;
                 gameButton[i][j].setEnabled(true);
-                //System.out.println("arr[i][j] -reset() " + arr[i][j]);
             }
         }
-        playerSeed = JOptionPane.showInputDialog(null, "Enter letter - X or O : ").toUpperCase();
+        playerSeed = JOptionPane.showInputDialog(null, 
+                "Enter letter - X or O : ").toUpperCase();
         while (((!(playerSeed.equals("X")) && (!(playerSeed.equals("O")))))) {
-            playerSeed = JOptionPane.showInputDialog(null, "Try Again! Enter letter - X or O : ").toUpperCase();
+            playerSeed = JOptionPane.showInputDialog(null, 
+                    "Try Again! Enter letter - X or O : ").toUpperCase();
         }
         setGo(false);
     }
@@ -102,10 +102,6 @@ public class TicTacToeModel {
             for (int row = 0; row < 3; row++) {
                 for (int col = 0; col < 3; col++) {
 
-                    //System.out.println("arr[i][j] - whowins " + arr[row][col]);
-                    
-                    // Check if column win
-                    //if (row != col) {
                         if (arr[row][0] == Seed.CROSS
                                 && arr[row][1] == Seed.CROSS
                                 && arr[row][2] == Seed.CROSS) {
@@ -133,7 +129,7 @@ public class TicTacToeModel {
                             xwin = true;
                             
                         }
-                   // }
+                 
 
                     // Check if down diagonal win
                     if (row == col) {
@@ -167,9 +163,13 @@ public class TicTacToeModel {
             }
             if (xwin) {
                 //Keep score, report win for player one
-                JOptionPane.showMessageDialog(null, getPlayerOneName() + " Wins!!! Score X:" + (xnum + 1) + "  O:" + onum,
-                        " WINNER : Click a box to continue! ", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("C:\\Users\\Chisoft\\"
-                                + "Documents\\NetBeansProjects\\TicTacToeGraphics\\image\\cross.jpg"));
+                JOptionPane.showMessageDialog(null, getPlayerOneName() +
+                        " Wins!!! Score X:" + (xnum + 1) + "  O:" + onum,
+                        " WINNER : Click a box to continue! ", 
+                        JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+                                "C:\\Users\\Chisoft\\Documents"
+                                        + "\\NetBeansProjects\\"
+                                        + "TicTacToeGraphics\\image\\cross.jpg"));
                 xnum++;
                 setGo(true);
                 reset(); // Reset game
@@ -177,9 +177,13 @@ public class TicTacToeModel {
 
             if (owin) {
                 //Keep score, report win for player one
-                JOptionPane.showMessageDialog(null, getPlayerTwoName() + " Wins!!! Score X:" + xnum + "  O:" + (onum + 1),
-                        " WINNER : Click a box to continue! ", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("C:\\Users\\Chisoft\\Documents"
-                                + "\\NetBeansProjects\\TicTacToeGraphics\\image\\zero.jpg"));
+                JOptionPane.showMessageDialog(null, getPlayerTwoName() + 
+                        " Wins!!! Score X:" + xnum + "  O:" + (onum + 1),
+                        " WINNER : Click a box to continue! ", 
+                        JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+                                "C:\\Users\\Chisoft\\Documents\\"
+                                        + "NetBeansProjects\\"
+                                        + "TicTacToeGraphics\\image\\zero.jpg"));
                 onum++;
                 setGo(true);
                 reset(); // Reset game
