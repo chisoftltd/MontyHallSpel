@@ -86,7 +86,7 @@ public class TicTacToeController extends Observable {
                             if (theView.getPlayerSeed().equals("X")) {
                                 Icon img = new ImageIcon(ImageIO.read(
                                         GameButtonListener.class.
-                                                getResourceAsStream("image/zero.jpg")));
+                                                getResourceAsStream("image/cross.jpg")));
                                 ((JButton) evt.getSource()).setIcon(img);
 
                                 // Set enum value
