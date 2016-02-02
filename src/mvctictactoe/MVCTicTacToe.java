@@ -10,7 +10,9 @@ import java.awt.Toolkit;
 
 /**
  *
- * @author Benjamin Chinwe 2016
+ * @author Benjamin Chinwe 2016. A project to implement TicTacToe 
+ * game using MVC design, Observable/Observable, Singleton, Pair programming
+ * och error handling.
  */
 public class MVCTicTacToe {
 
