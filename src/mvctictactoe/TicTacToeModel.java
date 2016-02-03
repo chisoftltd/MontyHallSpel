@@ -181,7 +181,7 @@ public class TicTacToeModel {
                         " WINNER : Click a box to continue! ",
                         JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
                                 ImageIO.read(TicTacToeModel.class.
-                                        getResourceAsStream("image/cross.jpg"))));
+                                        getResourceAsStream("image/zero.jpg"))));
                 onum++;
                 setGo(true);
                 reset(); // Reset game
