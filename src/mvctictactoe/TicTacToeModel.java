@@ -5,7 +5,9 @@
  */
 package mvctictactoe;
 
+import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,7 +34,7 @@ public class TicTacToeModel {
     private JButton[][] gameButton;
     private String playerTwoName;
     private String playerOneName;
-    
+
     private WindowDestroyer windowDestroyer;
     private WindowEvent evt;
 
@@ -75,7 +77,7 @@ public class TicTacToeModel {
     public void setCurrentSeed(Seed currentSeedNew, int r, int c) {
         currentSeed = currentSeedNew;
         arr[r][c] = currentSeedNew;
-        }
+    }
 
     // Method to reset the game after a win
     public void reset() {
@@ -104,30 +106,29 @@ public class TicTacToeModel {
             for (int row = 0; row < 3; row++) {
                 for (int col = 0; col < 3; col++) {
 
-                    if (arr[row][0] == Seed.CROSS
-                            && arr[row][1] == Seed.CROSS
-                            && arr[row][2] == Seed.CROSS) {
+                    // Check if row win
+                    if (arr[col][0] == Seed.CROSS
+                            && arr[col][1] == Seed.CROSS
+                            && arr[col][2] == Seed.CROSS) {
                         xwin = true;
+                    }
+                    if (arr[col][0] == Seed.NOUGHT
+                            && arr[col][1] == Seed.NOUGHT
+                            && arr[col][2] == Seed.NOUGHT) {
+                        owin = true;
+                    }
 
-                        // Check if row win
-                    } else if (arr[0][col] == Seed.NOUGHT
+                    // Check if column win
+                    if (arr[0][col] == Seed.NOUGHT
                             && arr[1][col] == Seed.NOUGHT
                             && arr[2][col] == Seed.NOUGHT) {
                         owin = true;
-
                     }
 
-                    if (arr[row][0] == Seed.NOUGHT
-                            && arr[row][1] == Seed.NOUGHT
-                            && arr[row][2] == Seed.NOUGHT) {
-                        owin = true;
-
-                        // Check if row win
-                    } else if (arr[0][col] == Seed.CROSS
+                    if (arr[0][col] == Seed.CROSS
                             && arr[1][col] == Seed.CROSS
                             && arr[2][col] == Seed.CROSS) {
                         xwin = true;
-
                     }
 
                     // Check if down diagonal win
@@ -185,9 +186,10 @@ public class TicTacToeModel {
                 setGo(true);
                 reset(); // Reset game
             }
-        } catch (Exception e) { // Capture error
-            windowDestroyer.windowClosed(evt);
+        } catch (IOException | HeadlessException e) { // Capture error
             System.err.println(e.getMessage());
+            windowDestroyer.windowClosed(evt);
+
         }
     }
 

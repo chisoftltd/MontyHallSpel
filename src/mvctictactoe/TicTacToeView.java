@@ -106,9 +106,9 @@ public class TicTacToeView extends JFrame implements Observer {
     // Method to accept players names
     void setPlayersName() {
         playerOneName = JOptionPane.showInputDialog(null,
-                "Enter Player One Name").toUpperCase();
+                "Enter Player One Name");
         playerTwoName = JOptionPane.showInputDialog(null,
-                "Enter Player Two Name").toUpperCase();
+                "Enter Player Two Name");
     }
 
     //Methos to accept player's ID - letter
