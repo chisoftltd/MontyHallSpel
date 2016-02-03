@@ -9,32 +9,34 @@ import java.util.Random;
 
 /**
  *
- * @author Chisoft
+ * @author Benjamin Chinwe 2016. A singleton class.
  */
 public class TicTacToeSingleton {
 
-   private static TicTacToeSingleton singleton = null;
+    private static TicTacToeSingleton singleton = null;
     private static int colorValue;
-   
-   /* A private Constructor prevents any other 
-    * class from instantiating.
-    */
-   private TicTacToeSingleton(){ }
-   
-   /* Static 'instance' method */
-   public static int getInstance( ) {
-       colorMethod();
-      return colorValue;
-   }
-   /* Other methods protected by singleton-ness */
-   protected static void colorMethod( ) {
-       Random buttonColor = new Random();
-       
-       for (int i = 0; i < 10; i++) {
-           colorValue = buttonColor.nextInt(250) + 1;
-       }
-       
-   }
-}
-    
 
+    /* A private Constructor prevents any other 
+    * class from instantiating.
+     */
+    private TicTacToeSingleton() {
+    }
+
+    /* Static 'instance' method */
+    public static int getInstance() {
+        colorMethod();
+        return colorValue;
+    }
+
+    /* Other methods protected by singleton-ness. This method 
+    randomise the background color of the gameButton in the
+    TicTacToeView class */
+    protected static void colorMethod() {
+        Random buttonColor = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            colorValue = buttonColor.nextInt(250) + 1;
+        }
+
+    }
+}

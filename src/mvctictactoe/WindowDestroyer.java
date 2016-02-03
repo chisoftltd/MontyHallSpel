@@ -13,43 +13,30 @@ import java.awt.event.WindowListener;
  * @author Chisoft
  */
 class WindowDestroyer implements WindowListener {
+    
 
     public WindowDestroyer() {
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowOpened(WindowEvent e) { }
 
     @Override
-    public void windowClosing(WindowEvent e) {
-        System.exit(0);
-    }
+    public void windowClosing(WindowEvent e) {}
 
     @Override
-    public void windowClosed(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowClosed(WindowEvent e) {System.exit(0);}
 
     @Override
-    public void windowIconified(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowIconified(WindowEvent e) {}
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowDeiconified(WindowEvent e) {}
 
     @Override
-    public void windowActivated(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowActivated(WindowEvent e) {}
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void windowDeactivated(WindowEvent e) {}
     
 }

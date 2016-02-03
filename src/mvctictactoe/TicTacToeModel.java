@@ -5,6 +5,7 @@
  */
 package mvctictactoe;
 
+import java.awt.event.WindowEvent;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,6 +32,9 @@ public class TicTacToeModel {
     private JButton[][] gameButton;
     private String playerTwoName;
     private String playerOneName;
+    
+    private WindowDestroyer windowDestroyer;
+    private WindowEvent evt;
 
     public TicTacToeModel() { //Argumentless constructor method
     }
@@ -71,15 +75,12 @@ public class TicTacToeModel {
     public void setCurrentSeed(Seed currentSeedNew, int r, int c) {
         currentSeed = currentSeedNew;
         arr[r][c] = currentSeedNew;
-        //System.out.println("r = " + r + " c = " + c);
-        //System.out.println(" TicTacToeModel.Seed - " + currentSeed);
-    }
+        }
 
     // Method to reset the game after a win
     public void reset() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                //gameButton[i][j].setText("");
                 gameButton[i][j].setIcon(null);
                 arr[i][j] = Seed.EMPTY;
                 gameButton[i][j].setEnabled(true);
@@ -185,6 +186,7 @@ public class TicTacToeModel {
                 reset(); // Reset game
             }
         } catch (Exception e) { // Capture error
+            windowDestroyer.windowClosed(evt);
             System.err.println(e.getMessage());
         }
     }
