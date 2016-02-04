@@ -14,10 +14,10 @@ import java.io.IOException;
  */
 public class TicTacToeException extends IOException{ 
     public TicTacToeException (){
-        super();
+        super(); // Argumentless call to super IOException class
     }
     public TicTacToeException (String message){
-        super(message);
+        super(message); // Argumentled call to super IOException class
     }
     public TicTacToeException (String message, Throwable cause){
         super(message, cause);
