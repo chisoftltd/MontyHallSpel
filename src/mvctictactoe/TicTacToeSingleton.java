@@ -32,7 +32,6 @@ public class TicTacToeSingleton {
 
     /* Static 'instance' method */
     public static TicTacToeSingleton getInstance() {
-        //colorMethod();
         return theSingleton;
     }
 
