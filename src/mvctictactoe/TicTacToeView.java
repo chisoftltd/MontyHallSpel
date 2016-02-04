@@ -37,12 +37,12 @@ public class TicTacToeView extends JFrame implements Observer {
     private String playerOneName;
     private String playerTwoName;
     private String player;
-    private TicTacToeSingleton colorSingleton;
+    private final TicTacToeSingleton colorSingleton;
     private final JLabel gameStatusLabel;
     private final JPanel gameStatusPanel;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public TicTacToeView() { // TicTacToeView class constructor
+    public TicTacToeView() throws Exception { // TicTacToeView class constructor
         // Set up UI 
         addWindowListener(new WindowDestroyer());
         setTitle("TicTacToe");
@@ -66,6 +66,8 @@ public class TicTacToeView extends JFrame implements Observer {
         outputPanel.setBackground(Color.BLACK);
         contentPane.add(outputField, BorderLayout.NORTH);
 
+        colorSingleton = TicTacToeSingleton.getInstance();
+
         layerGameBoard(gameButton); // Method to initialize game board
         contentPane.add(buttonPanel, BorderLayout.CENTER);
 
@@ -84,43 +86,60 @@ public class TicTacToeView extends JFrame implements Observer {
                 tempGameButton = new JButton();
                 gameButton[i][j] = tempGameButton;
                 gameButton[i][j].setBackground(new Color(
-                        TicTacToeSingleton.getInstance(),
-                        TicTacToeSingleton.getInstance(),
-                        TicTacToeSingleton.getInstance()));
+                        colorSingleton.colorMethod(),
+                        colorSingleton.colorMethod(),
+                        colorSingleton.colorMethod()));
                 buttonPanel.add(gameButton[i][j]);
             }
         }
+
     }
 
     // Method to reset the gameboard after a win or draw
-    public void setGameButton(JButton[][] gameButtonView) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                gameButtonView[i][j].setBackground(new Color((int) (Math.random()
-                        * 255 + 1), (int) (Math.random() * 255 + 1), (int) (Math.random() * 255 + 1)));
-                this.gameButton[i][j] = gameButtonView[i][j];
+    public void setGameButton(JButton[][] gameButtonView) throws TicTacToeException {
+        if (getPlayerSeed() != null) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    gameButtonView[i][j].setBackground(new Color((int) (Math.random()
+                            * 255 + 1), (int) (Math.random() * 255 + 1), (int) (Math.random() * 255 + 1)));
+                    this.gameButton[i][j] = gameButtonView[i][j];
+                }
             }
+        } else { // If player(s) fail to choose game Letter
+            setPlayerSeed();
+            throw new TicTacToeException ();
         }
+
     }
 
     // Method to accept players names
     void setPlayersName() {
-        playerOneName = JOptionPane.showInputDialog(null,
-                "Enter Player One Name");
-        playerTwoName = JOptionPane.showInputDialog(null,
-                "Enter Player Two Name");
+        try {
+            playerOneName = JOptionPane.showInputDialog(null,
+                    "Enter Player One Name");
+            playerTwoName = JOptionPane.showInputDialog(null,
+                    "Enter Player Two Name");
+        } catch (Exception e) {// If playerOneName or playerTwoName is empty
+            displayErrorMessage(e.getMessage());
+        }
+
     }
 
     //Methos to accept player's ID - letter
-    void setPlayerSeed() {
-        player = JOptionPane.showInputDialog(null,
-                "Enter ID letter - X or O : ").toUpperCase();
-
-        while (((!(player.equals("X")) && (!(player.equals("O")))))) {
+    void setPlayerSeed() throws TicTacToeException {
+        try {
             player = JOptionPane.showInputDialog(null,
-                    "Try Again! Enter letter - X or O : ").toUpperCase();
+                    "Enter ID letter - X or O : ").toUpperCase();
+
+            while (((!(player.equals("X")) && (!(player.equals("O")))))) {
+                player = JOptionPane.showInputDialog(null,
+                        "Try Again! Enter letter - X or O : ").toUpperCase();
+            }
+        } catch (Exception e) { // If player(s) fail to choose game Letter
+            displayErrorMessage(e.getMessage());
+            
         }
-        //outputField.setText(playerOneName + "!  Please start the game! ");
+
     }
     // Method to add ActionListener to the game buttons
 

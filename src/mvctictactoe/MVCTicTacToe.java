@@ -10,29 +10,35 @@ import java.awt.Toolkit;
 
 /**
  *
- * @author Benjamin Chinwe 2016. 
- * A project to implement TicTacToe 
- * game using MVC design, Observable/Observable, Singleton, Pair programming
- * och error handling.
+ * @author Benjamin Chinwe 2016. A project to implement TicTacToe game using MVC
+ * design, Observable/Observable, Singleton, Pair programming och error
+ * handling.
  */
 public class MVCTicTacToe {
 
     /**
      * @param args the command line arguments
+     * @throws mvctictactoe.TicTacToeException
      */
-    public static void main(String[] args) {
-        // Instantiate the View and Controller classes
-        TicTacToeView theView = new TicTacToeView();
-        TicTacToeController ticTacToeController = new TicTacToeController(theView);
-        ticTacToeController.addObserver(theView); // Adding the Observer 
-        // to the Observable
+    public static void main(String[] args) throws TicTacToeException, Exception {
+        try {
+            // Instantiate the View and Controller classes
+            TicTacToeView theView = new TicTacToeView();
+            TicTacToeController ticTacToeController = new TicTacToeController(theView);
+            ticTacToeController.addObserver(theView); // Adding the Observer
+            // to the Observable
 
-        // Setting up location of UI relative to the screen size
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - theView.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - theView.getHeight()) / 2);
-        theView.setLocation(x, y);
-        theView.setVisible(true); // Makes the view (UI) visiable 
+            // Setting up location of UI relative to the screen size
+            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (int) ((dimension.getWidth() - theView.getWidth()) / 2);
+            int y = (int) ((dimension.getHeight() - theView.getHeight()) / 2);
+            theView.setLocation(x, y);
+            theView.setVisible(true); // Makes the view (UI) visiable 
+        } catch (TicTacToeException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            throw new TicTacToeException(ex);
+        }
 
     }
 

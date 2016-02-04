@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,7 +27,7 @@ public class TicTacToeController extends Observable {
     private final TicTacToeModel theModel;
 
     // TicTacToeController class constructor
-    public TicTacToeController(TicTacToeView ticTacToeView) {
+    public TicTacToeController(TicTacToeView ticTacToeView) throws TicTacToeException {
         theView = ticTacToeView;
 
         theView.setPlayersName(); // Call setPlayersName method of TicTacToeView class
@@ -52,30 +54,35 @@ public class TicTacToeController extends Observable {
         // ActionPerformed performs Buttoon click ActionEvent
         @Override
         public void actionPerformed(ActionEvent evt) {
-            if (theModel.isGo()) {
-                theModel.reset(); // Reset the game after a win or a draw 
-
-                //ReSet Player's ID_Seed after a Win or a Draw
-                theView.setPlayerSeed(theModel.getPlayerSeed());
-                //Get Resetted Game Button array after a Win or a Draw
-                theView.setGameButton(theModel.getGameButton());
-            } //game over, reset all flags
-
-            if (theView.getPlayerSeed().equals("X")) {
-                theView.getOutPutText().setText(theView.getPlayerTwoName()
-                        + " 'Turn to play - TicTacToe");
-            } else {
-                theView.getOutPutText().setText(theView.getPlayerOneName()
-                        + " 'Turn to play - TicTacToe");
+            try {
+                if (theModel.isGo()) {
+                    theModel.reset(); // Reset the game after a win or a draw
+                    
+                    //ReSet Player's ID_Seed after a Win or a Draw
+                    theView.setPlayerSeed(theModel.getPlayerSeed());
+                    //Get Resetted Game Button array after a Win or a Draw
+                    theView.setGameButton(theModel.getGameButton());
+                } //game over, reset all flags
+                
+                if (theView.getPlayerSeed().equals("X")) {
+                    theView.getOutPutText().setText(theView.getPlayerTwoName()
+                            + " 'Turn to play - TicTacToe");
+                } else {
+                    theView.getOutPutText().setText(theView.getPlayerOneName()
+                            + " 'Turn to play - TicTacToe");
+                }
+                
+                //Call jButtonActionPerformed() to pass event and button array
+                //to other function
+                jButtonActionPerformed(evt, theView.getGameButton());
+            } catch (TicTacToeException ex) {
+                System.err.println(ex.getMessage());
+                Logger.getLogger(TicTacToeController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            //Call jButtonActionPerformed() to pass event and button array 
-            //to other function       
-            jButtonActionPerformed(evt, theView.getGameButton());
         }
 
         private void jButtonActionPerformed(ActionEvent evt,
-                JButton[][] gameButton) {
+                JButton[][] gameButton) throws TicTacToeException {
             try {
                 //if (evt.getActionCommand().equals(TicTacToeModel.Seed.EMPTY)) {
                 for (int i = 0; i < 3; i++) {
@@ -86,7 +93,7 @@ public class TicTacToeController extends Observable {
                             if (theView.getPlayerSeed().equals("X")) {
                                 Icon img = new ImageIcon(ImageIO.read(
                                         GameButtonListener.class.
-                                                getResourceAsStream("image/cross.jpg")));
+                                        getResourceAsStream("image/cross.jpg")));
                                 ((JButton) evt.getSource()).setIcon(img);
 
                                 // Set enum value
@@ -95,7 +102,7 @@ public class TicTacToeController extends Observable {
                             } else {
                                 Icon img = new ImageIcon(ImageIO.read(
                                         GameButtonListener.class.
-                                                getResourceAsStream("image/zero.jpg")));
+                                        getResourceAsStream("image/zero.jpg")));
                                 ((JButton) evt.getSource()).setIcon((img));
 
                                 // Set enum value NOUGHT
@@ -115,8 +122,9 @@ public class TicTacToeController extends Observable {
 
                 theView.setGameStatusLabel("");
                 theView.getGameStatusLabel();
-                theModel.whoWins(); // Determine if there is winnner
-
+                if (theModel.whoWins()) { // Determine if there is winnner
+                    theModel.reset();
+                }
                 // Swap the ID-letters 'X* for 'O'
                 if (theView.getPlayerSeed().equals("X")) {
                     theView.setPlayerSeed("O");
@@ -130,6 +138,8 @@ public class TicTacToeController extends Observable {
 
             } catch (Exception e) {
                 theView.displayErrorMessage(e.getMessage()); // Handle error
+                throw  new TicTacToeException (e);
+                
             }
         }
 
