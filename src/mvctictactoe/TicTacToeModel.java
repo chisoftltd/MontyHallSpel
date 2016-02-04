@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Benjamin Chinwe 2016
  */
-public class TicTacToeModel {
+public class TicTacToeModel extends IOException {
 
     public enum Seed { //Enumerator with three values
         EMPTY, CROSS, NOUGHT
@@ -81,6 +81,7 @@ public class TicTacToeModel {
 
     // Method to reset the game after a win
     public void reset() {
+        
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 gameButton[i][j].setIcon(null);
@@ -98,9 +99,10 @@ public class TicTacToeModel {
     }
 
     // Method to determine if there is a winner
-    public void whoWins() {
+    public boolean whoWins()throws TicTacToeException, IOException {
         boolean xwin = false;
         boolean owin = false;
+        boolean win = false;
         try {
             //Check rows for wins
             for (int row = 0; row < 3; row++) {
@@ -171,7 +173,8 @@ public class TicTacToeModel {
                                         getResourceAsStream("image/cross.jpg"))));
                 xnum++;
                 setGo(true);
-                reset(); // Reset game
+                win = xwin;
+                //reset(); // Reset game
             }
 
             if (owin) {
@@ -184,13 +187,18 @@ public class TicTacToeModel {
                                         getResourceAsStream("image/zero.jpg"))));
                 onum++;
                 setGo(true);
-                reset(); // Reset game
+                win = owin;
+               // reset(); // Reset game
             }
-        } catch (IOException | HeadlessException e) { // Capture error
+        } catch (TicTacToeException  e) { // Capture error
             System.err.println(e.getMessage());
             windowDestroyer.windowClosed(evt);
-
+        } catch (IOException ex){
+            windowDestroyer.windowClosed(evt);
+            throw new TicTacToeException (ex);
+            
         }
+        return win;
     }
 
     // Method to set boolena value go
